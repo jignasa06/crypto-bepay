@@ -4,7 +4,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../providers/send_flow_provider.dart';
-import '../../../../providers/wallet_provider.dart';
+import '../providers/wallet_provider.dart';
 import '../../../recipient/presentation/screens/recipient_screen.dart';
 
 class WalletScreen extends ConsumerWidget {

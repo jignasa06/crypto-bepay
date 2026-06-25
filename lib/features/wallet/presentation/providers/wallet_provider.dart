@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../shared/models/token_balance.dart';
-import 'repository_providers.dart';
+import '../../../../shared/models/token_balance.dart';
+import '../../../../providers/repository_providers.dart';
 
 final walletProvider = AsyncNotifierProvider<WalletNotifier,List<TokenBalance>>(WalletNotifier.new);
 

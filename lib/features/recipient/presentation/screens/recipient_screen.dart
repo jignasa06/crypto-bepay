@@ -5,7 +5,7 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../../core/validators/recipient_validator.dart';
-import '../../../../providers/recipient_provider.dart';
+import 'providers/recipient_provider.dart';
 import '../../../../shared/enums/recipient_type.dart';
 import '../../../../shared/models/recipient.dart';
 import '../../../pin/screens/amount_screen.dart';
