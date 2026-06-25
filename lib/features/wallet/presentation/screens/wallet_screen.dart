@@ -28,10 +28,7 @@ class WalletScreen extends ConsumerWidget {
                   ref.read(sendFlowProvider.notifier).selectedToken(token);
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) =>
-                      const RecipientScreen(),
-                    ),
+                    MaterialPageRoute(builder: (_) => RecipientScreen()),
                   );
                 },
               );
