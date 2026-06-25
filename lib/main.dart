@@ -1,3 +1,4 @@
+import 'package:crypto_bepay/features/wallet/presentation/screens/wallet_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: Scaffold(body: Center(child: Text('Bepay Assignment'))),
+      home: WalletScreen(),
     );
   }
 }

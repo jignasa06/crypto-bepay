@@ -6,6 +6,15 @@ import '../shared/models/recipient.dart';
 import '../shared/models/send_flow_state.dart';
 import '../shared/models/transaction_result.dart';
 
+
+final sendFlowProvider =
+NotifierProvider<
+    SendFlowNotifier,
+    SendFlowState
+>(
+  SendFlowNotifier.new,
+);
+
 class SendFlowNotifier extends Notifier<SendFlowState> {
   @override
   SendFlowState build() {
