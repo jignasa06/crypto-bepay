@@ -7,7 +7,6 @@ import '../../../../core/router/app_router.dart';
 import '../../../../providers/send_flow_notifier.dart';
 import '../providers/wallet_provider.dart';
 
-
 class WalletScreen extends ConsumerWidget {
   const WalletScreen({super.key});
 
@@ -26,8 +25,10 @@ class WalletScreen extends ConsumerWidget {
               return TokenCard(
                 token: token,
                 onSend: () {
-                  ref.read(sendFlowProvider.notifier).selectToken(token);
-                 context.push(AppRoutes.recipient);
+                  final notifier = ref.read(sendFlowProvider.notifier);
+                  notifier.reset();
+                  notifier.selectToken(token);
+                  context.push(AppRoutes.recipient);
                 },
               );
             },

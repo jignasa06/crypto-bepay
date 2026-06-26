@@ -115,7 +115,6 @@ class TransactionResultScreen extends ConsumerWidget {
                 height: 55,
                 child: FilledButton(
                   onPressed: () {
-                    ref.read(sendFlowProvider.notifier).reset();
                     context.go(AppRoutes.wallet);
                   },
                   child: const Text("Back to Wallet"),
