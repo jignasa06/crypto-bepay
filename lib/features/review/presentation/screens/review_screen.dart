@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
+import '../../../../core/router/app_router.dart';
 import '../../../../providers/send_flow_notifier.dart';
 import '../../presentation/widgets/review_summary_card.dart';
-import '../../../pin/presentation/screens/pin_screen.dart';
 
 class ReviewScreen extends ConsumerWidget {
   const ReviewScreen({super.key});
@@ -77,16 +78,13 @@ class ReviewScreen extends ConsumerWidget {
                 height: 54,
                 child: FilledButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (_) => const PinScreen()),
-                    );
-
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text('PIN Screen will be added next'),
                       ),
                     );
+
+                    context.push(AppRoutes.pin);
                   },
                   child: const Text("Confirm Transfer"),
                 ),

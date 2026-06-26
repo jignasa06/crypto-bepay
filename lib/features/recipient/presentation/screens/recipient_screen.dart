@@ -1,8 +1,10 @@
+import 'package:crypto_bepay/core/router/app_router.dart';
 import 'package:crypto_bepay/providers/send_flow_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../../core/validators/recipient_validator.dart';
 import 'providers/recipient_provider.dart';
@@ -46,10 +48,7 @@ class _RecipientScreenState extends ConsumerState<RecipientScreen> {
     );
 
     ref.read(sendFlowProvider.notifier).setRecipient(recipient);
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (_) => const AmountScreen()),
-    );
+    context.push(AppRoutes.amount);
   }
 
   @override
