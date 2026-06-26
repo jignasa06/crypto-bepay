@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
 import '../../../../providers/send_flow_notifier.dart';
+import '../../../../shared/enums/mock_transaction_mode.dart';
 import '../../../../shared/enums/numeric_keyboard_type.dart';
 import '../../../amount/presentation/widgets/numeric_keyboard.dart';
 
@@ -16,7 +16,7 @@ class PinScreen extends ConsumerWidget {
     final state = ref.watch(sendFlowProvider);
     final notifier = ref.read(sendFlowProvider.notifier);
 
-    Future<void> _onConfirm() async {
+    Future<void> onConfirm() async {
       if (!notifier.verifyPin()) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -46,7 +46,36 @@ class PinScreen extends ConsumerWidget {
         child: Column(
           children: [
             const SizedBox(height: 24),
-
+            Wrap(
+              spacing: 8,
+              children: [
+                ChoiceChip(
+                  label: const Text("Success"),
+                  selected: false,
+                  onSelected: (_) {
+                    ref.read(sendFlowProvider.notifier)
+                        .setTransactionMode(MockTransactionMode.success);
+                  },
+                ),
+                ChoiceChip(
+                  label: const Text("Pending"),
+                  selected: false,
+                  onSelected: (_) {
+                    ref.read(sendFlowProvider.notifier)
+                        .setTransactionMode(MockTransactionMode.pending);
+                  },
+                ),
+                ChoiceChip(
+                  label: const Text("Failed"),
+                  selected: false,
+                  onSelected: (_) {
+                    ref.read(sendFlowProvider.notifier)
+                        .setTransactionMode(MockTransactionMode.failed);
+                  },
+                ),
+              ],
+            ),
+            const SizedBox(height: 24),
             const Text(
               "Enter your 4-digit PIN",
               style: TextStyle(
@@ -108,7 +137,7 @@ class PinScreen extends ConsumerWidget {
                 height: 54,
                 child: FilledButton(
                   onPressed: state.isPinComplete && !state.isLoading
-                      ? _onConfirm
+                      ? onConfirm
                       : null,
                   child: state.isLoading
                       ? const SizedBox(

@@ -1,6 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../core/validators/amount_validator.dart';
+import '../shared/enums/mock_transaction_mode.dart';
 import '../shared/models/fee_estimate.dart';
 import '../shared/models/recipient.dart';
 import '../shared/models/send_flow_state.dart';
@@ -130,6 +131,9 @@ class SendFlowNotifier extends Notifier<SendFlowState> {
 
   void setFeeEstimate(FeeEstimate fee) {
     state = state.copyWith(feeEstimate: fee);
+  }
+  void setTransactionMode(MockTransactionMode mode) {
+    ref.read(transactionRepositoryProvider).setMode(mode);
   }
 
   void setTransactionResult(TransactionResult result) {

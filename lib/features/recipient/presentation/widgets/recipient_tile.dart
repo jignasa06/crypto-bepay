@@ -1,5 +1,4 @@
 import 'package:crypto_bepay/shared/models/recipient.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class RecipientTile extends StatelessWidget {
