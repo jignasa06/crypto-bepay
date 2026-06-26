@@ -6,35 +6,21 @@ import '../../../shared/models/fee_estimate.dart';
 import '../../../shared/models/transaction_result.dart';
 
 class TransactionRepository {
-  Future<FeeEstimate> estimateFee({
-    required String token,
-  }) async {
+  Future<FeeEstimate> estimateFee({required String token}) async {
     await Future.delayed(const Duration(milliseconds: 300));
 
     switch (token) {
       case 'ETH':
-        return const FeeEstimate(
-          fee: 0.005,
-          token: 'ETH',
-        );
+        return const FeeEstimate(fee: 0.005, token: 'ETH');
 
       case 'SOL':
-        return const FeeEstimate(
-          fee: 0.001,
-          token: 'SOL',
-        );
+        return const FeeEstimate(fee: 0.001, token: 'SOL');
 
       case 'USDT':
-        return const FeeEstimate(
-          fee: 0.01,
-          token: 'USDT',
-        );
+        return const FeeEstimate(fee: 0.01, token: 'USDT');
 
       default:
-        return const FeeEstimate(
-          fee: 0.02,
-          token: 'USDC',
-        );
+        return const FeeEstimate(fee: 0.02, token: 'USDC');
     }
   }
 
@@ -54,8 +40,7 @@ class TransactionRepository {
     }
 
     return TransactionResult(
-      transactionId:
-      'TX-${DateTime.now().millisecondsSinceEpoch}',
+      transactionId: 'TX-${DateTime.now().millisecondsSinceEpoch}',
       status: status,
     );
   }

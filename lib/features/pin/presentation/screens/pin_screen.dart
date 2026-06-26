@@ -15,11 +15,8 @@ class PinScreen extends ConsumerWidget {
   Widget build(BuildContext context,WidgetRef ref) {
     final state = ref.watch(sendFlowProvider);
     final notifier = ref.read(sendFlowProvider.notifier);
-    Future<void> submitTransaction() async {
-      if (!state.isPinComplete || state.isLoading) {
-        return;
-      }
 
+    Future<void> _onConfirm() async {
       if (!notifier.verifyPin()) {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
@@ -27,22 +24,16 @@ class PinScreen extends ConsumerWidget {
             backgroundColor: Colors.red,
           ),
         );
-
         notifier.clearPin();
-
         return;
       }
 
       final result = await notifier.sendTransaction();
 
-      if (context.mounted && result != null) {
-        notifier.clearPin();
-        context.go(AppRoutes.success);
-      } else if (context.mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Transaction failed. Please try again.'),
-          ),
+      if (result != null) {
+        context.go(
+          AppRoutes.transactionResult,
+          extra: result,
         );
       }
     }
@@ -117,7 +108,7 @@ class PinScreen extends ConsumerWidget {
                 height: 54,
                 child: FilledButton(
                   onPressed: state.isPinComplete && !state.isLoading
-                      ? submitTransaction
+                      ? _onConfirm
                       : null,
                   child: state.isLoading
                       ? const SizedBox(

@@ -5,7 +5,9 @@ import '../../features/amount/presentation/screens/amount_screen.dart';
 import '../../features/pin/presentation/screens/pin_screen.dart';
 import '../../features/recipient/presentation/screens/recipient_screen.dart';
 import '../../features/review/presentation/screens/review_screen.dart';
+import '../../features/transaction/presentation/screens/transaction_result_screen.dart';
 import '../../features/wallet/presentation/screens/wallet_screen.dart';
+import '../../shared/models/transaction_result.dart';
 
 class AppRoutes {
   static const wallet = '/';
@@ -13,31 +15,24 @@ class AppRoutes {
   static const amount = '/amount';
   static const review = '/review';
   static const pin = '/pin';
-  static const success = '/success';
+  static const transactionResult = '/transaction-result';
 }
 
 final appRouter = GoRouter(
   initialLocation: AppRoutes.wallet,
   routes: [
+    GoRoute(path: AppRoutes.wallet, builder: (_, __) => const WalletScreen()),
+    GoRoute(path: AppRoutes.recipient, builder: (_, __) => RecipientScreen()),
+    GoRoute(path: AppRoutes.amount, builder: (_, __) => const AmountScreen()),
+    GoRoute(path: AppRoutes.review, builder: (_, __) => const ReviewScreen()),
+    GoRoute(path: AppRoutes.pin, builder: (_, __) => const PinScreen()),
     GoRoute(
-      path: AppRoutes.wallet,
-      builder: (_, __) => const WalletScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.recipient,
-      builder: (_, __) => RecipientScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.amount,
-      builder: (_, __) => const AmountScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.review,
-      builder: (_, __) => const ReviewScreen(),
-    ),
-    GoRoute(
-      path: AppRoutes.pin,
-      builder: (_, __) => const PinScreen(),
+      path: AppRoutes.transactionResult,
+      builder: (context, state) {
+        final result = state.extra as TransactionResult;
+
+        return TransactionResultScreen(result: result);
+      },
     ),
   ],
 );

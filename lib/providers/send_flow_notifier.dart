@@ -143,12 +143,14 @@ class SendFlowNotifier extends Notifier<SendFlowState> {
 
       final result = await repository.submitTransaction();
 
-      state = state.copyWith(transactionResult: result, isLoading: false);
+      state = state.copyWith(
+        transactionResult: result,
+        isLoading: false,
+      );
 
       return result;
     } catch (_) {
       state = state.copyWith(isLoading: false);
-
       return null;
     }
   }
