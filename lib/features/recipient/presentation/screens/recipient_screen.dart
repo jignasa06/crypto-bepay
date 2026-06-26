@@ -1,4 +1,4 @@
-import 'package:crypto_bepay/providers/send_flow_provider.dart';
+import 'package:crypto_bepay/providers/send_flow_notifier.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -8,7 +8,7 @@ import '../../../../core/validators/recipient_validator.dart';
 import 'providers/recipient_provider.dart';
 import '../../../../shared/enums/recipient_type.dart';
 import '../../../../shared/models/recipient.dart';
-import '../../../pin/screens/amount_screen.dart';
+import '../../../amount/presentation/screens/amount_screen.dart';
 import '../widgets/recipient_tile.dart';
 
 class RecipientScreen extends ConsumerStatefulWidget {
