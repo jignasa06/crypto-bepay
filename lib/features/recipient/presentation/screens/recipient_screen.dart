@@ -1,8 +1,6 @@
 import 'package:crypto_bepay/core/router/app_router.dart';
 import 'package:crypto_bepay/providers/send_flow_notifier.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
@@ -10,10 +8,11 @@ import '../../../../core/validators/recipient_validator.dart';
 import 'providers/recipient_provider.dart';
 import '../../../../shared/enums/recipient_type.dart';
 import '../../../../shared/models/recipient.dart';
-import '../../../amount/presentation/screens/amount_screen.dart';
 import '../widgets/recipient_tile.dart';
 
 class RecipientScreen extends ConsumerStatefulWidget {
+  const RecipientScreen({super.key});
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() =>
       _RecipientScreenState();
@@ -84,7 +83,7 @@ class _RecipientScreenState extends ConsumerState<RecipientScreen> {
                 data: (recipients) {
                   return ListView.separated(
                     itemCount: recipients.length,
-                    separatorBuilder: (_, __) => const Divider(height: 1),
+                    separatorBuilder: (_, _) => const Divider(height: 1),
                     itemBuilder: (context, index) {
                       final recipient = recipients[index];
 
@@ -102,23 +101,12 @@ class _RecipientScreenState extends ConsumerState<RecipientScreen> {
                     Center(child: Text(error.toString())),
               ),
             ),
-
             SizedBox(
               width: double.infinity,
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue, // Button background color
-                  foregroundColor: Colors.white, // Text/Icon color
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 30,
-                    vertical: 15,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20), // Rounded corners
-                  ),
-                ),
+              height: 55,
+              child: FilledButton(
                 onPressed: _continue,
-                child: const Text('Continue'),
+                child: const Text("Continue"),
               ),
             ),
             const SizedBox(height: 12),

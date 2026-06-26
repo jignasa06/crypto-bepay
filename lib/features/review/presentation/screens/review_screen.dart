@@ -20,7 +20,7 @@ class ReviewScreen extends ConsumerWidget {
     final total = state.amountValue + fee.fee;
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Review Transfer"), centerTitle: true),
+      appBar: AppBar(title: const Text("Review Transfer")),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(16),
@@ -78,11 +78,6 @@ class ReviewScreen extends ConsumerWidget {
                 height: 54,
                 child: FilledButton(
                   onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('PIN Screen will be added next'),
-                      ),
-                    );
                     context.push(AppRoutes.pin);
                   },
                   child: const Text("Confirm Transfer"),

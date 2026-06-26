@@ -1,13 +1,12 @@
 import 'package:crypto_bepay/features/wallet/presentation/widgets/token_card.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
 import '../../../../providers/send_flow_notifier.dart';
 import '../providers/wallet_provider.dart';
-import '../../../recipient/presentation/screens/recipient_screen.dart';
+
 
 class WalletScreen extends ConsumerWidget {
   const WalletScreen({super.key});

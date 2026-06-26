@@ -82,10 +82,11 @@ class SendFlowNotifier extends Notifier<SendFlowState> {
 
   void setMax() {
     final token = state.selectedToken;
-
     if (token == null) return;
 
-    state = state.copyWith(amount: token.balance.toStringAsFixed(4));
+    state = state.copyWith(
+      amount: token.balance.toString(),
+    );
   }
 
   String? validateAmount() {
@@ -175,6 +176,8 @@ class SendFlowNotifier extends Notifier<SendFlowState> {
   }
 
   void reset() {
-    state = const SendFlowState();
+    state = SendFlowState(
+      selectedToken: state.selectedToken,
+    );
   }
 }

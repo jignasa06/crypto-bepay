@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../core/router/app_router.dart';
+import '../../../../providers/send_flow_notifier.dart';
 import '../../../../shared/enums/transaction_status.dart';
 import '../../../../shared/models/transaction_result.dart';
 
-class TransactionResultScreen extends StatelessWidget {
+class TransactionResultScreen extends ConsumerWidget {
   final TransactionResult result;
 
   const TransactionResultScreen({
@@ -14,7 +16,7 @@ class TransactionResultScreen extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context,WidgetRef ref) {
     final bool success =
         result.status == TransactionStatus.success;
 
@@ -108,6 +110,7 @@ class TransactionResultScreen extends StatelessWidget {
               height: 55,
               child: FilledButton(
                 onPressed: () {
+                  ref.read(sendFlowProvider.notifier).reset();
                   context.go(AppRoutes.wallet);
                 },
                 child: const Text(

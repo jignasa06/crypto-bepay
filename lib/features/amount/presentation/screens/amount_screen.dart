@@ -7,7 +7,6 @@ import '../../../../providers/send_flow_notifier.dart';
 import '../../../../shared/enums/numeric_keyboard_type.dart';
 import '../../../../shared/models/send_flow_state.dart';
 import '../widgets/amount_display.dart';
-import '../widgets/continue_button.dart';
 import '../widgets/numeric_keyboard.dart';
 import '../widgets/recipient_card.dart';
 import '../widgets/token_balance_card.dart';
@@ -21,15 +20,21 @@ class AmountScreen extends ConsumerStatefulWidget {
 
 class _AmountScreenState extends ConsumerState<AmountScreen> {
   Future<void> _continue() async {
-    final error = await ref.read(sendFlowProvider.notifier).prepareReview();
+    final notifier = ref.read(sendFlowProvider.notifier);
+
+    final success = await notifier.prepareReview();
 
     if (!mounted) return;
 
-    if (error != null) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text(error.toString())));
+    if (!success) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please enter a valid amount'),
+        ),
+      );
+      return;
     }
+
     context.push(AppRoutes.review);
   }
 
@@ -44,7 +49,14 @@ class _AmountScreenState extends ConsumerState<AmountScreen> {
         ? null
         : ref.read(sendFlowProvider.notifier).validateAmount();
 
+    final canContinue =
+        validationError == null &&
+            state.amountValue > 0 &&
+            state.selectedToken != null &&
+            state.recipient != null;
+
     return Scaffold(
+      appBar: AppBar(title: const Text('Amount')),
       body: SafeArea(
         child: Column(
           children: [
@@ -99,7 +111,15 @@ class _AmountScreenState extends ConsumerState<AmountScreen> {
               },
             ),
 
-            ContinueButton(onPressed: _continue),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 10,vertical: 5),
+              width: double.infinity,
+              height: 55,
+              child: FilledButton(
+                onPressed: canContinue ? _continue : null,
+                child: const Text("Continue"),
+              ),
+            ),
           ],
         ),
       ),

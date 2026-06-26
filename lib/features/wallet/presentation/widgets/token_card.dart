@@ -33,29 +33,21 @@ class TokenCard extends StatelessWidget {
 
                 const SizedBox(width: 12),
 
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment:
-                    CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        token.symbol,
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
+                Column(
+                  crossAxisAlignment:
+                  CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      token.symbol,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
                       ),
+                    ),
 
-                      Text(
-                        '${token.name} • ${token.network}',
-                      ),
-                    ],
-                  ),
-                ),
-
-                TextButton.icon(
-                  onPressed: onSend,
-                  icon: const Icon(Icons.send),
-                  label: const Text('Send'),
+                    Text(
+                      '${token.name} • ${token.network}',
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -82,6 +74,12 @@ class TokenCard extends StatelessWidget {
                   '\$${fiatValue.toStringAsFixed(2)}',
                 ),
               ],
+            ),
+            const SizedBox(height: 8),
+            TextButton.icon(
+              onPressed: onSend,
+              icon: const Icon(Icons.send),
+              label: const Text('Send'),
             ),
           ],
         ),
