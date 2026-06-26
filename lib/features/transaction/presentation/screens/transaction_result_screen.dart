@@ -5,16 +5,12 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../providers/send_flow_notifier.dart';
 import '../../../../shared/enums/transaction_status.dart';
-import '../../../../shared/models/send_flow_state.dart';
 import '../../../../shared/models/transaction_result.dart';
 
 class TransactionResultScreen extends ConsumerWidget {
   final TransactionResult result;
 
-  const TransactionResultScreen({
-    super.key,
-    required this.result,
-  });
+  const TransactionResultScreen({super.key, required this.result});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -36,14 +32,12 @@ class TransactionResultScreen extends ConsumerWidget {
       icon = Icons.check_circle_rounded;
       color = Colors.green;
       title = "Transaction Successful";
-      subtitle =
-      "${state.amount} ${token.symbol} sent to ${recipient.value}";
+      subtitle = "${state.amount} ${token.symbol} sent to ${recipient.value}";
     } else if (pending) {
       icon = Icons.schedule_rounded;
       color = Colors.orange;
       title = "Transaction Pending";
-      subtitle =
-      "${state.amount} ${token.symbol} is being processed.";
+      subtitle = "${state.amount} ${token.symbol} is being processed.";
     } else {
       icon = Icons.cancel_rounded;
       color = Colors.red;
@@ -66,11 +60,7 @@ class TransactionResultScreen extends ConsumerWidget {
               CircleAvatar(
                 radius: 42,
                 backgroundColor: color.withOpacity(.12),
-                child: Icon(
-                  icon,
-                  size: 48,
-                  color: color,
-                ),
+                child: Icon(icon, size: 48, color: color),
               ),
 
               const SizedBox(height: 24),
@@ -88,10 +78,7 @@ class TransactionResultScreen extends ConsumerWidget {
               Text(
                 subtitle,
                 textAlign: TextAlign.center,
-                style: const TextStyle(
-                  fontSize: 17,
-                  color: Colors.grey,
-                ),
+                style: const TextStyle(fontSize: 17, color: Colors.grey),
               ),
 
               const SizedBox(height: 32),
@@ -102,9 +89,7 @@ class TransactionResultScreen extends ConsumerWidget {
                   children: [
                     ListTile(
                       title: const Text("Amount"),
-                      trailing: Text(
-                        "${state.amount} ${token.symbol}",
-                      ),
+                      trailing: Text("${state.amount} ${token.symbol}"),
                     ),
                     ListTile(
                       title: const Text("Network"),
@@ -113,9 +98,7 @@ class TransactionResultScreen extends ConsumerWidget {
                     ListTile(
                       title: const Text("Fee"),
                       trailing: Text(
-                        fee == null
-                            ? "-"
-                            : "${fee.fee} ${fee.token}",
+                        fee == null ? "-" : "${fee.fee} ${fee.token}",
                       ),
                     ),
                     ListTile(
@@ -125,25 +108,8 @@ class TransactionResultScreen extends ConsumerWidget {
                   ],
                 ),
               ),
-
               const SizedBox(height: 20),
-
-              /*OutlinedButton.icon(
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        "View Details not implemented",
-                      ),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.receipt_long),
-                label: const Text("View Details"),
-              ),
-*/
               const Spacer(),
-
               SizedBox(
                 width: double.infinity,
                 height: 55,
