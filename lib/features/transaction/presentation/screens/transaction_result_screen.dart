@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../../providers/send_flow_notifier.dart';
 import '../../../../shared/enums/transaction_status.dart';
+import '../../../../shared/models/send_flow_state.dart';
 import '../../../../shared/models/transaction_result.dart';
 
 class TransactionResultScreen extends ConsumerWidget {
@@ -16,109 +17,146 @@ class TransactionResultScreen extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context,WidgetRef ref) {
-    final bool success =
-        result.status == TransactionStatus.success;
+  Widget build(BuildContext context, WidgetRef ref) {
+    final state = ref.watch(sendFlowProvider);
 
-    final bool pending =
-        result.status == TransactionStatus.pending;
+    final token = state.selectedToken!;
+    final recipient = state.recipient!;
+    final fee = state.feeEstimate;
 
-    IconData icon;
-    Color color;
-    String title;
-    String subtitle;
+    final success = result.status == TransactionStatus.success;
+    final pending = result.status == TransactionStatus.pending;
+
+    late IconData icon;
+    late Color color;
+    late String title;
+    late String subtitle;
 
     if (success) {
       icon = Icons.check_circle_rounded;
       color = Colors.green;
-
-      title = "Transfer Successful";
-
+      title = "Transaction Successful";
       subtitle =
-      "Your transaction has been completed successfully.";
+      "${state.amount} ${token.symbol} sent to ${recipient.value}";
     } else if (pending) {
-      icon = Icons.access_time_filled_rounded;
+      icon = Icons.schedule_rounded;
       color = Colors.orange;
-
-      title = "Transfer Pending";
-
+      title = "Transaction Pending";
       subtitle =
-      "Your transaction is being processed. It may take a few moments.";
+      "${state.amount} ${token.symbol} is being processed.";
     } else {
       icon = Icons.cancel_rounded;
       color = Colors.red;
-
-      title = "Transfer Failed";
-
-      subtitle =
-      "Something went wrong while processing your transaction.";
+      title = "Transaction Failed";
+      subtitle = "Your transaction could not be completed.";
     }
 
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: const Text("Transaction Status"),
+        title: const Text("Transaction"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(24),
-        child: Column(
-          children: [
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Column(
+            children: [
+              const Spacer(),
 
-            const Spacer(),
-
-            Icon(
-              icon,
-              size: 90,
-              color: color,
-            ),
-
-            const SizedBox(height: 24),
-
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 26,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-
-            const SizedBox(height: 12),
-
-            Text(
-              subtitle,
-              textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 16,
-                color: Colors.grey,
-              ),
-            ),
-
-            const SizedBox(height: 30),
-
-            Card(
-              elevation: 0,
-              child: ListTile(
-                title: const Text("Transaction ID"),
-                subtitle: Text(result.transactionId),
-              ),
-            ),
-
-            const Spacer(),
-
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: FilledButton(
-                onPressed: () {
-                  ref.read(sendFlowProvider.notifier).reset();
-                  context.go(AppRoutes.wallet);
-                },
-                child: const Text(
-                  "Back to Wallet",
+              CircleAvatar(
+                radius: 42,
+                backgroundColor: color.withOpacity(.12),
+                child: Icon(
+                  icon,
+                  size: 48,
+                  color: color,
                 ),
               ),
-            ),
-          ],
+
+              const SizedBox(height: 24),
+
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+
+              const SizedBox(height: 12),
+
+              Text(
+                subtitle,
+                textAlign: TextAlign.center,
+                style: const TextStyle(
+                  fontSize: 17,
+                  color: Colors.grey,
+                ),
+              ),
+
+              const SizedBox(height: 32),
+
+              Card(
+                elevation: 0,
+                child: Column(
+                  children: [
+                    ListTile(
+                      title: const Text("Amount"),
+                      trailing: Text(
+                        "${state.amount} ${token.symbol}",
+                      ),
+                    ),
+                    ListTile(
+                      title: const Text("Network"),
+                      trailing: Text(token.network),
+                    ),
+                    ListTile(
+                      title: const Text("Fee"),
+                      trailing: Text(
+                        fee == null
+                            ? "-"
+                            : "${fee.fee} ${fee.token}",
+                      ),
+                    ),
+                    ListTile(
+                      title: const Text("Transaction ID"),
+                      subtitle: Text(result.transactionId),
+                    ),
+                  ],
+                ),
+              ),
+
+              const SizedBox(height: 20),
+
+              /*OutlinedButton.icon(
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text(
+                        "View Details not implemented",
+                      ),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.receipt_long),
+                label: const Text("View Details"),
+              ),
+*/
+              const Spacer(),
+
+              SizedBox(
+                width: double.infinity,
+                height: 55,
+                child: FilledButton(
+                  onPressed: () {
+                    ref.read(sendFlowProvider.notifier).reset();
+                    context.go(AppRoutes.wallet);
+                  },
+                  child: const Text("Back to Wallet"),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
