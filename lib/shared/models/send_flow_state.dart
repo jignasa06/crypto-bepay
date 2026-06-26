@@ -11,6 +11,7 @@ class SendFlowState extends Equatable {
   final String amount;
   final FeeEstimate? feeEstimate;
   final TransactionResult? transactionResult;
+  final String pin;
 
   /// UI State
   final bool isLoading;
@@ -22,6 +23,7 @@ class SendFlowState extends Equatable {
     this.feeEstimate,
     this.transactionResult,
     this.isLoading = false,
+    this.pin = '',
   });
 
   SendFlowState copyWith({
@@ -31,6 +33,7 @@ class SendFlowState extends Equatable {
     FeeEstimate? feeEstimate,
     TransactionResult? transactionResult,
     bool? isLoading,
+    String? pin,
   }) {
     return SendFlowState(
       selectedToken: selectedToken ?? this.selectedToken,
@@ -39,6 +42,7 @@ class SendFlowState extends Equatable {
       feeEstimate: feeEstimate ?? this.feeEstimate,
       transactionResult: transactionResult ?? this.transactionResult,
       isLoading: isLoading ?? this.isLoading,
+      pin: pin ?? this.pin,
     );
   }
 
@@ -50,6 +54,7 @@ class SendFlowState extends Equatable {
     feeEstimate,
     transactionResult,
     isLoading,
+    pin
   ];
 
   double get amountValue => double.tryParse(amount) ?? 0;
@@ -69,4 +74,6 @@ class SendFlowState extends Equatable {
           recipient != null &&
           amountValue > 0 &&
           !isLoading;
+
+  bool get isPinComplete => pin.length == 4;
 }

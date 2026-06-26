@@ -1,0 +1,4 @@
+enum NumericKeyboardType {
+  amount,
+  pin,
+}

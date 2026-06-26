@@ -83,7 +83,6 @@ class ReviewScreen extends ConsumerWidget {
                         content: Text('PIN Screen will be added next'),
                       ),
                     );
-
                     context.push(AppRoutes.pin);
                   },
                   child: const Text("Confirm Transfer"),

@@ -135,6 +135,43 @@ class SendFlowNotifier extends Notifier<SendFlowState> {
     state = state.copyWith(transactionResult: result);
   }
 
+  Future<TransactionResult?> sendTransaction() async {
+    state = state.copyWith(isLoading: true);
+
+    try {
+      final repository = ref.read(transactionRepositoryProvider);
+
+      final result = await repository.submitTransaction();
+
+      state = state.copyWith(transactionResult: result, isLoading: false);
+
+      return result;
+    } catch (_) {
+      state = state.copyWith(isLoading: false);
+
+      return null;
+    }
+  }
+
+  void appendPin(String digit) {
+    if (state.pin.length >= 4) return;
+
+    state = state.copyWith(pin: state.pin + digit);
+  }
+
+  void removePin() {
+    if (state.pin.isEmpty) return;
+
+    state = state.copyWith(pin: state.pin.substring(0, state.pin.length - 1));
+  }
+
+  void clearPin() {
+    state = state.copyWith(pin: '');
+  }
+  bool verifyPin() {
+    return state.pin == '1234';
+  }
+
   void reset() {
     state = const SendFlowState();
   }

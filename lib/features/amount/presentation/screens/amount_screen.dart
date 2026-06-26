@@ -4,8 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../providers/send_flow_notifier.dart';
+import '../../../../shared/enums/numeric_keyboard_type.dart';
 import '../../../../shared/models/send_flow_state.dart';
-import '../../../review/presentation/screens/review_screen.dart';
 import '../widgets/amount_display.dart';
 import '../widgets/continue_button.dart';
 import '../widgets/numeric_keyboard.dart';
@@ -86,6 +86,7 @@ class _AmountScreenState extends ConsumerState<AmountScreen> {
             ),
 
             NumericKeyboard(
+              keyboardType: NumericKeyboardType.amount,
               onKeyPressed: (key) {
                 if (key == '.') {
                   ref.read(sendFlowProvider.notifier).appendDecimal();
